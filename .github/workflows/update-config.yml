@@ -1,0 +1,84 @@
+# .github/workflows/update-config.yml
+#
+# GitHub Actions workflow that reminds you to review config.json
+# on 1 July each year (start of new Australian financial year).
+#
+# It opens a GitHub Issue titled "⚠️ Annual config review due"
+# listing exactly which parameters to check and where to find them.
+#
+# To enable:
+#   1. Go to github.com/jeromecy/mortgagemate-config/settings/actions
+#   2. Set Actions permissions → Allow all actions
+#   3. The workflow runs automatically on 1 July each year.
+#
+# For fully automatic scraping: replace the "Open reminder issue" step
+# with a Python script that fetches ATO / APRA pages and patches config.json.
+# That requires more maintenance when government websites change their layout.
+
+name: Annual Config Review Reminder
+
+on:
+  schedule:
+    # Runs at 09:00 AEST on 1 July (= 23:00 UTC on 30 June)
+    - cron: "0 23 30 6 *"
+
+  # Also allows manual trigger from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  remind:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+
+    steps:
+      - name: Open reminder issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo:  context.repo.repo,
+              title: "⚠️ Annual config review due — new financial year",
+              body: [
+                "## MortgageMate config.json — annual review checklist",
+                "",
+                "A new Australian financial year has started. Please review and update `config.json`.",
+                "",
+                "### 1. ATO HECS/HELP repayment thresholds",
+                "- **Source:** https://www.ato.gov.au/individuals-and-families/study-and-training-support-loans/help-hecs-and-student-loan-repayment/repaying-your-help-debt/help-repayment-thresholds-and-rates",
+                "- **Field:** `hecsRepaymentRates` — update `minIncome` values (indexed to CPI each July)",
+                "",
+                "### 2. ATO income tax brackets",
+                "- **Source:** https://www.ato.gov.au/tax-rates-and-codes/tax-rates-australian-residents",
+                "- **Field:** hardcoded in `MortgageViewModel.australianIncomeTax()` — update Swift code if brackets change",
+                "- Note: brackets are usually stable; check the ATO page for any Budget changes",
+                "",
+                "### 3. APRA serviceability buffer",
+                "- **Source:** https://www.apra.gov.au/mortgages",
+                "- **Field:** `apraBuffer` — currently `0.03` (3%). Change only if APRA makes an announcement.",
+                "",
+                "### 4. ABS living costs",
+                "- **Source:** https://www.abs.gov.au/statistics/economy/finance/household-expenditure-survey",
+                "- **Field:** `absLivingCosts` — update only when a new HES is published (~every 4-6 years)",
+                "",
+                "### 5. State stamp duty schedules",
+                "- Check each state revenue office after their annual Budget (typically May–June):",
+                "  - NSW: https://www.revenue.nsw.gov.au/taxes-duties-levies-royalties/transfer-duty",
+                "  - VIC: https://www.sro.vic.gov.au/land-transfer-duty",
+                "  - QLD: https://www.qro.qld.gov.au/duties/transfer-duty",
+                "  - WA:  https://www.wa.gov.au/service/financial-management/taxation/transfer-duty",
+                "  - SA:  https://www.revenuesa.sa.gov.au/stampduty/realproperty",
+                "  - ACT: https://www.revenue.act.gov.au/duties/conveyance-duty",
+                "  - TAS: https://www.sro.tas.gov.au/duties",
+                "  - NT:  https://nt.gov.au/industry/business-and-industry-site/build-or-develop/build/stamp-duty",
+                "- **Field:** `stampDuty.<STATE>` arrays",
+                "",
+                "### 6. LMI rates",
+                "- **Source:** Helia (formerly Genworth) — https://www.helia.com.au",
+                "- **Field:** `lmiRates` — these change infrequently; review if housing market conditions shift",
+                "",
+                "Once updated, commit `config.json`. The app will pick up changes within 24 hours.",
+              ].join("\n"),
+              labels: ["maintenance", "annual-review"],
+            });
