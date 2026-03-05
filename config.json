@@ -1,0 +1,97 @@
+{
+  "schemaVersion": "1.0",
+  "publishedDate": "2025-07-01",
+
+  "apraBuffer": 0.03,
+
+  "absLivingCosts": {
+    "perAdultMonthly": 1850,
+    "perChildMonthly": 650,
+    "petMonthly": 200,
+    "sigmaFraction": 0.10
+  },
+
+  "hecsRepaymentRates": [
+    { "minIncome":  54435, "repaymentRate": 0.010 },
+    { "minIncome":  62739, "repaymentRate": 0.020 },
+    { "minIncome":  66202, "repaymentRate": 0.025 },
+    { "minIncome":  73219, "repaymentRate": 0.030 },
+    { "minIncome":  84973, "repaymentRate": 0.040 },
+    { "minIncome":  91302, "repaymentRate": 0.045 },
+    { "minIncome": 100174, "repaymentRate": 0.050 },
+    { "minIncome": 110874, "repaymentRate": 0.060 },
+    { "minIncome": 122728, "repaymentRate": 0.065 },
+    { "minIncome": 135875, "repaymentRate": 0.070 },
+    { "minIncome": 150422, "repaymentRate": 0.075 },
+    { "minIncome": 166717, "repaymentRate": 0.080 },
+    { "minIncome": 184939, "repaymentRate": 0.085 },
+    { "minIncome": 188009, "repaymentRate": 0.100 }
+  ],
+
+  "stampDuty": {
+    "NSW": [
+      { "threshold":       0, "flatFee":      0, "rate": 0.01250 },
+      { "threshold":   16000, "flatFee":    200, "rate": 0.01500 },
+      { "threshold":   35000, "flatFee":    485, "rate": 0.01750 },
+      { "threshold":   93000, "flatFee":   1500, "rate": 0.03500 },
+      { "threshold":  351000, "flatFee":  10530, "rate": 0.04500 },
+      { "threshold": 1168000, "flatFee":  47295, "rate": 0.05500 }
+    ],
+    "VIC": [
+      { "threshold":      0, "flatFee":     0, "rate": 0.01400 },
+      { "threshold":  25000, "flatFee":   350, "rate": 0.02400 },
+      { "threshold": 130000, "flatFee":  2870, "rate": 0.06000 },
+      { "threshold": 960000, "flatFee": 52670, "rate": 0.05500 }
+    ],
+    "QLD": [
+      { "threshold":       0, "flatFee":     0, "rate": 0.01000 },
+      { "threshold":    5000, "flatFee":    50, "rate": 0.02000 },
+      { "threshold":   75000, "flatFee":  1450, "rate": 0.03000 },
+      { "threshold":  540000, "flatFee": 15350, "rate": 0.03500 },
+      { "threshold": 1000000, "flatFee": 31450, "rate": 0.04500 }
+    ],
+    "WA": [
+      { "threshold":      0, "flatFee":     0, "rate": 0.01900 },
+      { "threshold": 120000, "flatFee":  2280, "rate": 0.02850 },
+      { "threshold": 150000, "flatFee":  3135, "rate": 0.03800 },
+      { "threshold": 360000, "flatFee": 11115, "rate": 0.04500 },
+      { "threshold": 725000, "flatFee": 27540, "rate": 0.05150 }
+    ],
+    "SA": [
+      { "threshold":      0, "flatFee":    0, "rate": 0.01000 },
+      { "threshold":  12000, "flatFee":  120, "rate": 0.02000 },
+      { "threshold":  30000, "flatFee":  480, "rate": 0.03000 },
+      { "threshold":  50000, "flatFee": 1080, "rate": 0.03500 },
+      { "threshold": 100000, "flatFee": 2830, "rate": 0.04000 },
+      { "threshold": 200000, "flatFee": 6830, "rate": 0.05000 },
+      { "threshold": 250000, "flatFee": 9330, "rate": 0.05500 },
+      { "threshold": 500000, "flatFee": 23080, "rate": 0.05700 }
+    ],
+    "ACT": [
+      { "threshold":       0, "flatFee":     0, "rate": 0.01200 },
+      { "threshold":  200000, "flatFee":  2400, "rate": 0.02300 },
+      { "threshold":  300000, "flatFee":  4700, "rate": 0.02800 },
+      { "threshold":  500000, "flatFee": 10300, "rate": 0.04900 },
+      { "threshold": 1000000, "flatFee": 34800, "rate": 0.04900 }
+    ],
+    "TAS": [
+      { "threshold":      0, "flatFee":    0, "rate": 0.01750 },
+      { "threshold":  25000, "flatFee":  437, "rate": 0.02250 },
+      { "threshold":  75000, "flatFee": 1562, "rate": 0.03500 },
+      { "threshold": 200000, "flatFee": 5937, "rate": 0.04250 },
+      { "threshold": 375000, "flatFee": 13375, "rate": 0.04500 }
+    ],
+    "NT": [
+      { "threshold":      0, "flatFee":    0, "rate": 0.01490 },
+      { "threshold": 525000, "flatFee": 7822, "rate": 0.04950 }
+    ]
+  },
+
+  "lmiRates": [
+    { "minLVR": 0.80, "maxLVR": 0.85, "rate": 0.0050 },
+    { "minLVR": 0.85, "maxLVR": 0.90, "rate": 0.0100 },
+    { "minLVR": 0.90, "maxLVR": 0.95, "rate": 0.0200 },
+    { "minLVR": 0.95, "maxLVR": 1.00, "rate": 0.0350 }
+  ],
+  "lmiThresholdLVR": 0.80
+}
