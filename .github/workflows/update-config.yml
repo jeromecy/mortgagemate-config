@@ -26,12 +26,29 @@ on:
   workflow_dispatch:
 
 jobs:
-  remind:
+  archive-and-remind:
     runs-on: ubuntu-latest
     permissions:
+      contents: write   # needed to commit the archive
       issues: write
 
     steps:
+      # ── Step 1: Archive the current config.json into history/ ────────────
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Archive current config.json to history/
+        run: |
+          # Filename = the publishedDate field inside the file being archived
+          DATE=$(python3 -c "import json; d=json.load(open('config.json')); print(d['publishedDate'])")
+          cp config.json "history/${DATE}.json"
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add "history/${DATE}.json"
+          git diff --cached --quiet || git commit -m "Archive config as history/${DATE}.json"
+          git push
+
+      # ── Step 2: Open the annual review reminder issue ─────────────────────
       - name: Open reminder issue
         uses: actions/github-script@v7
         with:
